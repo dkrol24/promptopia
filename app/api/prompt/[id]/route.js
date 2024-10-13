@@ -41,14 +41,22 @@ export const PATCH = async (request, { params }) => {
 };
 
 export const DELETE = async (request, { params }) => {
+    console.log("Deleting prompt with ID:", params.id); // Logowanie ID do usunięcia
     try {
         await connectToDB();
 
         // Find the prompt by ID and remove it
-        await Prompt.findByIdAndRemove(params.id);
+        const deletedPrompt = await Prompt.findByIdAndRemove(params.id);
 
+        if (!deletedPrompt) {
+            console.log("Prompt not found"); // Loguj, jeśli nie znaleziono
+            return new Response("Prompt not found", { status: 404 });
+        }
+
+        console.log("Prompt deleted successfully"); // Logowanie pomyślnego usunięcia
         return new Response("Prompt deleted successfully", { status: 200 });
     } catch (error) {
+        console.error("Error deleting prompt:", error); // Loguj błąd
         return new Response("Error deleting prompt", { status: 500 });
     }
 };
