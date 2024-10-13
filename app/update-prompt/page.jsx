@@ -56,6 +56,7 @@ const UpdatePrompt = () => {
   };
 
   return (
+    <Suspense fallback={<div>Loading...</div>}>
     <Form
       type='Edit'
       post={post}
@@ -63,16 +64,9 @@ const UpdatePrompt = () => {
       submitting={submitting}
       handleSubmit={updatePrompt}
     />
+      </Suspense>
   );
 };
 
 // Owiń w Suspense
-const PageWrapper = () => {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <UpdatePrompt />
-    </Suspense>
-  );
-};
-
-export default PageWrapper;
+export default UpdatePrompt;
